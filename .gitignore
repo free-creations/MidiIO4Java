@@ -1,1 +1,7 @@
 /nbproject/private/
+/native/build/
+/build/
+/native/dist/
+/dist/
+/native/javah/
+/native/nbproject/private/

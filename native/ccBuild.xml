@@ -25,6 +25,10 @@ limitations under the License.
 
 -->
 
+<!--
+  TODO Remove everything related to "javah-test"
+-->
+
 
 
 <project basedir=".." default="..." name="cc-impl">
@@ -90,9 +94,11 @@ limitations under the License.
   </target>
   
   <target name="-cc-javah-test-clean" depends="-cc-init" >
+    <!--
     <delete>
       <fileset dir="${cc-javah-test.dir}" includes="*.h"/>
     </delete>
+    -->
   </target>
   
   <target name="-cc-compile-clean" depends="-cc-init" >
