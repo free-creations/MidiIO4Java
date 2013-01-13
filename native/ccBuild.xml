@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2012 Harald Postner <Harald at free_creations.de>.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!--
+   build file for the native part of a "MidiIO4Java" Java-Native-Interface (JNI) library.
+
+   More on cpptasks for Apache Ant see:
+   http://ant-contrib.sourceforge.net/cpptasks/index.html
+
+   How integrate custom Ant scripts into Netbeans, here:
+   http://netbeans.org/kb/articles/freeform-config.html
+
+-->
+
+
+
+<project basedir=".." default="..." name="cc-impl">
+  
+
+  <property name="cc-source.dir"        location="native"/>  
+  <property file="${cc-source.dir}/ccConfig.properties"/>
+
+  <property name="cc-javah.dir"         location="${cc-source.dir}/javah"/>  
+  <property name="cc-javah-test.dir"    location="${cc-javah.dir}/test"/>  
+  <property name="cc-dist.dir"          location="dist"/>  
+  
+  <property name="cc-jni-incbase.dir"   location="${java.home}/../include"/>
+  <property name="cc-jniHeader"         location="${cc-jni-incbase.dir}/jni.h"/>
+  
+
+  <condition property="is-windows" value="true">
+    <os family="windows" />
+  </condition>
+
+  <condition property="is-linux" value="true">
+    <os family="unix" />
+  </condition>
+
+  <target name="-cc-win-init" if="is-windows">
+    <property name="compiler" value="msvc" />    
+    <property name="cc-outfile" value="${cc-dist.dir}/MidiIO4Java-win32-0.0.1"/> 
+  </target>
+  
+  <target name="-cc-linux-init" if="is-linux">
+    <property name="make" value="make" />    
+    <property name="cc-jni-inc-os.dir"   location="${cc-jni-incbase.dir}/linux"/>
+    <property name="cc-outfile" 
+              value="${cc-dist.dir}/lib${PROJECT_NAME}-linux32-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.so"/> 
+  </target>
+  
+  <target name="-cc-init" depends="-cc-win-init, -cc-linux-init">
+    <mkdir dir="${cc-javah.dir}" /> 
+  </target>
+  
+  <target name="-cc-sanityCheck" depends="-cc-init">
+    <available property="haveJniOsHeaders" file="${cc-jni-inc-os.dir}" type="dir"/>
+    <fail unless="haveJniOsHeaders" message="'${cc-jni-inc-os.dir}' not found."/>   
+
+    <available property="haveJniHeader" file="${cc-jniHeader}" type="file"/>
+    <fail unless="haveJniHeader" message="'${cc-jniHeader}' not found."/>   
+    <echo message="JNI header ='${cc-jniHeader}'."/>   
+  </target>
+  
+  
+    
+  
+  <target name="-cc-junit-init">
+    <property name="is-test" value="true"/>   
+  </target>
+
+
+  
+  <target name="-cc-javah-clean" depends="-cc-init" >
+    <delete>
+      <fileset dir="${cc-javah.dir}" includes="*.h"/>
+    </delete>
+  </target>
+  
+  <target name="-cc-javah-test-clean" depends="-cc-init" >
+    <delete>
+      <fileset dir="${cc-javah-test.dir}" includes="*.h"/>
+    </delete>
+  </target>
+  
+  <target name="-cc-compile-clean" depends="-cc-init" >
+    <delete file="${cc-outfile}"/> 
+  </target>
+  
+  <target name="-cc-clean" depends="-cc-javah-clean,-cc-javah-test-clean,-cc-init">
+    <exec executable="${make}"
+          dir="${cc-source.dir}">
+      <arg value="clean"/>
+      <arg value="CONF=Release"/>
+    </exec>
+  </target>
+  
+
+  
+  <target name="-cc-javah" depends="-cc-javah-clean, -do-compile">
+    <javah classpath="build/classes" 
+           destdir="${cc-javah.dir}" 
+           verbose="yes"
+           class="${javah.classes}"/>   
+  </target>
+
+  <target name="-cc-javah-test" 
+          depends="-cc-javah-test-clean, -do-compile, -do-compile-test" if="is-test">
+    <!--
+    <javah classpath="build/test/classes" 
+           destdir="${cc-javah-test.dir}" 
+           verbose="yes"
+           class="${javah-test.classes}"/>   
+           -->
+  </target>
+
+  <target name="-cc-compile" 
+          description="Compile C++ native code project."
+          depends="-cc-init, -cc-javah, -cc-compile-clean"
+          unless="is-test" >
+    <exec executable="${make}"
+          dir="${cc-source.dir}"
+          failonerror="true">
+      <arg value="build"/>
+      <arg value="CONF=Release"/>
+      <arg value="WITH_JUNIT=WITHOUT_JUNIT"/>
+      <arg value="JNI_INCLUDE_OS=${cc-jni-inc-os.dir}"/>
+      <arg value="JNI_INCLUDE_BASE=${cc-jni-incbase.dir}"/>
+    </exec>
+    <copy
+      file="${cc-source.dir}/dist/Release/GNU-Linux-x86/libnative.so"
+      tofile="${cc-outfile}"
+      failonerror="true"/>
+    <echo message="Result written to '${cc-outfile}'."/>  
+  </target>
+  
+  <target name="-cc-compile-test" 
+          description="Compile C++ native code project with JUnit support."
+          depends="-cc-init, -cc-javah, -cc-javah-test, -cc-compile-clean"
+          if="is-test">
+    <echo message="### Compiling with JUnit support.###"/> 
+    <exec executable="${make}"
+          dir="${cc-source.dir}"
+          failonerror="true">
+      <arg value="build"/>
+      <arg value="CONF=Release"/>
+      <arg value="WITH_JUNIT=WITH_JUNIT"/>
+      <arg value="JNI_INCLUDE_OS=${cc-jni-inc-os.dir}"/>
+      <arg value="JNI_INCLUDE_BASE=${cc-jni-incbase.dir}"/>
+    </exec>
+    <copy
+      file="${cc-source.dir}/dist/Release/GNU-Linux-x86/libnative.so"
+      tofile="${cc-outfile}"
+      failonerror="true"/>
+    <echo message="Result written to '${cc-outfile}'."/>  
+  </target>
+  
+  <!-- Let the -cc-init be executed as the very first step, before the regular Netbeans init. -->
+  <target name="-pre-init" depends="-cc-init"/>
+  
+  <!-- Let the cc-clean be executed after the regular netbeans clean. -->
+  <target name="-post-clean" depends="-cc-clean"/>
+  
+
+  
+  <!-- Let the cc-compile be executed after the regular Netbeans Java compile. -->
+  <target name="-post-compile" depends="-cc-compile"/>  
+  <target name="-post-compile-test" depends="-cc-compile-test"/>    
+  <target name="-post-compile-test-single" depends="-cc-compile-test"/>    
+  
+</project>
