@@ -70,17 +70,17 @@ LDLIBSOPTIONS=-lpthread `pkg-config --libs jack`
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnative.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnative.${CND_DLIB_EXT} -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libnative.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
 ${OBJECTDIR}/jackNative.o: nbproject/Makefile-${CND_CONF}.mk jackNative.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/jackNative.o jackNative.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11  -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/jackNative.o jackNative.cpp
 
 ${OBJECTDIR}/windowsNative.o: nbproject/Makefile-${CND_CONF}.mk windowsNative.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/windowsNative.o windowsNative.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11  -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/windowsNative.o windowsNative.cpp
 
 # Subprojects
 .build-subprojects:
@@ -107,49 +107,49 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/ptrEnvelopeTest.o ${TESTDIR}/tests/ptr
 ${TESTDIR}/tests/portTest.o: tests/portTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portTest.o tests/portTest.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portTest.o tests/portTest.cpp
 
 
 ${TESTDIR}/tests/portTestRunner.o: tests/portTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portTestRunner.o tests/portTestRunner.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portTestRunner.o tests/portTestRunner.cpp
 
 
 ${TESTDIR}/tests/portchainTest.o: tests/portchainTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portchainTest.o tests/portchainTest.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portchainTest.o tests/portchainTest.cpp
 
 
 ${TESTDIR}/tests/portchainTestRunner.o: tests/portchainTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portchainTestRunner.o tests/portchainTestRunner.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/portchainTestRunner.o tests/portchainTestRunner.cpp
 
 
 ${TESTDIR}/tests/processExceptionTest.o: tests/processExceptionTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/processExceptionTest.o tests/processExceptionTest.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/processExceptionTest.o tests/processExceptionTest.cpp
 
 
 ${TESTDIR}/tests/processExceptionTestRunner.o: tests/processExceptionTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/processExceptionTestRunner.o tests/processExceptionTestRunner.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/processExceptionTestRunner.o tests/processExceptionTestRunner.cpp
 
 
 ${TESTDIR}/tests/ptrEnvelopeTest.o: tests/ptrEnvelopeTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/ptrEnvelopeTest.o tests/ptrEnvelopeTest.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/ptrEnvelopeTest.o tests/ptrEnvelopeTest.cpp
 
 
 ${TESTDIR}/tests/ptrEnvelopeTestRunner.o: tests/ptrEnvelopeTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I. -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -MMD -MP -MF $@.d -o ${TESTDIR}/tests/ptrEnvelopeTestRunner.o tests/ptrEnvelopeTestRunner.cpp
+	$(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} -I. `pkg-config --cflags jack` -std=c++11  -MMD -MP -MF $@.d -o ${TESTDIR}/tests/ptrEnvelopeTestRunner.o tests/ptrEnvelopeTestRunner.cpp
 
 
 ${OBJECTDIR}/jackNative_nomain.o: ${OBJECTDIR}/jackNative.o jackNative.cpp 
@@ -160,7 +160,7 @@ ${OBJECTDIR}/jackNative_nomain.o: ${OBJECTDIR}/jackNative.o jackNative.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -fPIC  -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/jackNative_nomain.o jackNative.cpp;\
+	    $(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11  -fPIC  -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/jackNative_nomain.o jackNative.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/jackNative.o ${OBJECTDIR}/jackNative_nomain.o;\
 	fi
@@ -173,7 +173,7 @@ ${OBJECTDIR}/windowsNative_nomain.o: ${OBJECTDIR}/windowsNative.o windowsNative.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11   -fPIC  -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/windowsNative_nomain.o windowsNative.cpp;\
+	    $(COMPILE.cc) -g -Werror -D${WITH_JUNIT} -DWITH_JACK -I${JNI_INCLUDE_OS} -I${JNI_INCLUDE_BASE} `pkg-config --cflags jack` -std=c++11  -fPIC  -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/windowsNative_nomain.o windowsNative.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/windowsNative.o ${OBJECTDIR}/windowsNative_nomain.o;\
 	fi
